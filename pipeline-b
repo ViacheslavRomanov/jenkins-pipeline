@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages
+            {
+                stage('Checkout'){
+                    steps {
+                        checkout scm
+                    }
+                }
+                stage('Start') {
+                    steps {
+                        bat '...start'
+                    }
+                }
+                stage ('Invoke_pipeline') {
+                    steps {
+                        build job: 'pipeline-a', parameters: [
+                                string(name: 'param1', value: "value1")
+                        ]
+                    }
+                }
+            }
+}
